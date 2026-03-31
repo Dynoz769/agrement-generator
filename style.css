@@ -1207,10 +1207,40 @@ canvas.is-drawing {
 }
 
 @media print {
+  @page {
+    size: A4;
+    margin: 12mm 10mm 16mm;
+  }
+
+  html {
+    font-size: 100%;
+  }
+
   body {
     background: #fff !important;
-    padding: 0;
-    font-size: 12pt;
+    padding: 0 0 10mm;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #111827;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body::after {
+    content: "No. Rujukan: " attr(data-print-reference) "  |  Dijana: " attr(data-print-timestamp);
+    position: fixed;
+    left: 10mm;
+    right: 10mm;
+    bottom: 4mm;
+    display: block;
+    padding-top: 3mm;
+    border-top: 1px solid #cbd5e1;
+    font-family: "Karla", "Segoe UI", Arial, sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #64748b;
   }
 
   .topbar,
@@ -1223,6 +1253,13 @@ canvas.is-drawing {
 
   .main-grid {
     display: block;
+  }
+
+  .page-wrap,
+  #previewSection {
+    max-width: none !important;
+    width: auto !important;
+    margin: 0 !important;
   }
 
   .card,
@@ -1238,11 +1275,166 @@ canvas.is-drawing {
 
   .paper {
     max-width: 100%;
-    padding: 0;
+    padding: 14mm 14mm 12mm;
+    border: 1px solid #cbd5e1 !important;
+    border-top: 6px solid #172327 !important;
     border-radius: 0;
+    overflow: visible;
   }
 
   .paper::before {
     display: none;
+  }
+
+  .paper-head {
+    margin-bottom: 18pt;
+    padding-bottom: 14pt;
+    border-bottom: 1px solid #cbd5e1;
+  }
+
+  .paper-head .tag {
+    padding: 5pt 10pt;
+    border: 1px solid #9aa6af;
+    background: transparent !important;
+    color: #344054;
+    font-size: 8.5pt;
+    letter-spacing: 0.14em;
+  }
+
+  .paper-head h1 {
+    font-size: 21pt;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .paper-head p {
+    font-size: 10pt;
+    color: #475467;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-bottom: 18pt;
+    border: 1px solid #d7dee7;
+    font-size: 10pt;
+  }
+
+  .meta > div {
+    padding: 10pt 12pt;
+  }
+
+  .meta > div:not(:last-child) {
+    border-right: 1px solid #d7dee7;
+  }
+
+  .letter-body {
+    font-size: 11.4pt;
+    line-height: 1.72;
+    color: #1f2937;
+    letter-spacing: 0;
+  }
+
+  .letter-body p {
+    margin-bottom: 12pt;
+    text-align: justify;
+  }
+
+  .detail-box {
+    margin: 16pt 0;
+    padding: 12pt;
+    border: 1px solid #cbd5e1;
+    border-radius: 0;
+    background: transparent !important;
+  }
+
+  .detail-grid {
+    gap: 10pt;
+  }
+
+  .detail-item {
+    padding: 10pt 12pt;
+    border-radius: 0;
+    border: 1px solid #d7dee7;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .detail-item small {
+    font-size: 8.3pt;
+    color: #667085;
+    letter-spacing: 0.1em;
+  }
+
+  .detail-item strong {
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+
+  .detail-note {
+    font-size: 10pt;
+  }
+
+  .signatures {
+    margin-top: 28pt;
+    gap: 18pt;
+    align-items: start;
+  }
+
+  .sig-card {
+    padding: 0;
+    border: none !important;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .sig-label {
+    margin-bottom: 8pt;
+    font-size: 8.5pt;
+    color: #667085;
+    letter-spacing: 0.14em;
+  }
+
+  .sig-preview {
+    min-height: 78pt;
+    padding: 10pt;
+    border: 1px solid #d7dee7;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .sig-preview img {
+    max-height: 54pt;
+  }
+
+  .sig-line {
+    margin-top: 8pt;
+    padding-top: 8pt;
+    border-top: 1px solid #111827;
+  }
+
+  .sig-line strong {
+    font-size: 10.5pt;
+    letter-spacing: 0;
+  }
+
+  .sig-line span,
+  .empty-sign {
+    font-size: 9pt;
+    color: #667085;
+  }
+
+  .paper,
+  .meta,
+  .letter-body,
+  .detail-box,
+  .detail-item,
+  .signatures,
+  .sig-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }

@@ -67,6 +67,7 @@ const hargaFormatted = document.getElementById("hargaFormatted");
 const hargaWords = document.getElementById("hargaWords");
 const sigOutPenjualWrap = document.getElementById("sigOutPenjualWrap");
 const sigOutPembeliWrap = document.getElementById("sigOutPembeliWrap");
+const defaultDocumentTitle = document.title;
 
 const today = new Date();
 const pads = {};
@@ -817,6 +818,19 @@ function resetFormAll() {
   setFeedback("Semua maklumat telah direset dan draft browser dipadam.", true);
 }
 
+function preparePrintView() {
+  const referenceNumber = generateReferenceNumber();
+  document.body.dataset.printReference = referenceNumber;
+  document.body.dataset.printTimestamp = formatDateTimeMY(new Date().toISOString());
+  document.title = `${referenceNumber} - Surat Pengesahan Pembelian`;
+}
+
+function restoreAfterPrint() {
+  document.title = defaultDocumentTitle;
+  delete document.body.dataset.printReference;
+  delete document.body.dataset.printTimestamp;
+}
+
 function handlePrint() {
   closeMenuIfOpen();
   const stats = getCompletionStats();
@@ -826,6 +840,7 @@ function handlePrint() {
     setFeedback("Dokumen lengkap dan sedia dicetak.", true);
   }
 
+  preparePrintView();
   window.print();
 }
 
@@ -887,6 +902,9 @@ function attachActionListeners() {
       closeMenu();
     }
   });
+
+  window.addEventListener("beforeprint", preparePrintView);
+  window.addEventListener("afterprint", restoreAfterPrint);
 }
 
 function initDefaults() {
