@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generator Surat Pengesahan Pembelian</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+  <aside class="side-menu" id="sideMenu" aria-hidden="true" tabindex="-1">
+    <div class="side-menu-head">
+      <div>
+        <div class="side-menu-label">Menu Ringkas</div>
+        <h2>Surat Jual Beli</h2>
+      </div>
+      <button
+        type="button"
+        class="menu-toggle menu-toggle-close"
+        id="menuCloseBtn"
+        aria-label="Tutup menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <div class="side-menu-section">
+      <div class="side-menu-title">Navigasi Cepat</div>
+      <div class="side-menu-links">
+        <a href="#docStatusPanel" class="menu-link" data-menu-close="true">Status Dokumen</a>
+        <a href="#saleLetterForm" class="menu-link" data-menu-close="true">Borang Maklumat</a>
+        <a href="#previewSection" class="menu-link" data-menu-close="true">Preview Surat</a>
+      </div>
+    </div>
+
+    <div class="side-menu-section">
+      <div class="side-menu-title">Tindakan</div>
+      <div class="menu-action-grid">
+        <button type="button" class="btn btn-primary" data-action="print">Cetak / Simpan PDF</button>
+        <button type="button" class="btn btn-secondary" data-action="copy">Salin Teks Surat</button>
+        <button type="button" class="btn btn-accent" data-action="sample">Isi Contoh Cepat</button>
+        <button type="button" class="btn btn-muted" data-action="reset">Reset Semua</button>
+      </div>
+    </div>
+
+    <div class="side-menu-section">
+      <div class="side-menu-title">Apa Yang Ada</div>
+      <ul class="menu-points">
+        <li>Maklumat penjual, pembeli, item, harga jualan, dan kaedah bayaran</li>
+        <li>Autosave draft terus ke browser untuk sambung semula kemudian</li>
+        <li>Tandatangan digital terus pada dokumen</li>
+        <li>Preview surat masa nyata semasa anda mengisi borang</li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="page-wrap">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <div class="topbar-label">Generator Surat</div>
+        <strong>Surat Pengesahan Pembelian</strong>
+      </div>
+      <button
+        type="button"
+        class="menu-toggle"
+        id="menuToggle"
+        data-menu-toggle="true"
+        aria-expanded="false"
+        aria-controls="sideMenu"
+        aria-label="Buka menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge"><span></span> Website Generator Surat Jual Beli</div>
+          <h1>Surat pengesahan pembelian yang nampak kemas, profesional, dan terus boleh print.</h1>
+          <p>
+            Isi maklumat penjual, pembeli, item yang dijual, harga jualan, dan tandatangan kedua-dua pihak.
+            Surat akan dijana secara automatik dalam masa nyata.
+          </p>
+          <div class="hero-inline-note">
+            Guna menu burger untuk navigasi cepat, salin teks, isi contoh, atau reset tanpa memenuhi ruang borang.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="main-grid">
+      <section class="card form-card" aria-label="Borang surat pengesahan pembelian">
+        <div class="card-header">
+          <h2>Borang Maklumat</h2>
+          <p>Lengkapkan semua maklumat di bawah. Preview surat di sebelah kanan akan berubah secara automatik.</p>
+        </div>
+        <div class="card-body">
+          <div class="status-panel" id="docStatusPanel" aria-live="polite">
+            <div class="status-top">
+              <div>
+                <div class="section-title">Status Dokumen</div>
+                <h3 id="completionText">0 / 14 lengkap</h3>
+              </div>
+              <span class="status-badge" id="docStatusBadge" data-state="draft">Draf</span>
+            </div>
+            <div class="status-summary">
+              <span id="progressPercent">0% siap</span>
+              <span id="draftState">Autosave aktif dalam browser ini</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <span class="progress-fill" id="progressFill"></span>
+            </div>
+            <div class="status-meta">
+              <span id="lastSavedText">Belum ada draft disimpan</span>
+              <span id="referenceText">No. rujukan: -</span>
+            </div>
+            <div class="missing-panel">
+              <strong>Masih perlu dilengkapkan</strong>
+              <ul class="missing-list" id="missingList">
+                <li>Maklumat belum diisi.</li>
+              </ul>
+            </div>
+          </div>
+
+          <form id="saleLetterForm" novalidate>
+            <div class="section">
+              <div class="section-title">Maklumat Asas</div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="tarikh">Tarikh</label>
+                  <input type="date" id="tarikh" data-required="true" data-label="Tarikh" />
+                </div>
+                <div class="field">
+                  <label for="lokasi">Lokasi</label>
+                  <input type="text" id="lokasi" placeholder="Contoh: Kuching, Sarawak" data-required="true" data-label="Lokasi" autocomplete="address-level2" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">Pihak Penjual</div>
+              <div class="field">
+                <label for="namaPenjual">Nama Penjual</label>
+                <input type="text" id="namaPenjual" placeholder="Nama penuh penjual" data-required="true" data-label="Nama penjual" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="icPenjual">No. IC / No. Syarikat</label>
+                <input type="text" id="icPenjual" placeholder="Contoh: 900101-13-1234" data-required="true" data-label="No. IC / No. syarikat penjual" inputmode="text" spellcheck="false" />
+              </div>
+              <div class="field">
+                <label for="alamatPenjual">Alamat Penjual</label>
+                <textarea id="alamatPenjual" placeholder="Masukkan alamat penuh penjual" data-required="true" data-label="Alamat penjual" autocomplete="street-address"></textarea>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">Pihak Pembeli</div>
+              <div class="field">
+                <label for="namaPembeli">Nama Pembeli</label>
+                <input type="text" id="namaPembeli" placeholder="Nama penuh pembeli" data-required="true" data-label="Nama pembeli" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="icPembeli">No. IC / No. Syarikat</label>
+                <input type="text" id="icPembeli" placeholder="Contoh: 910202-13-5678" data-required="true" data-label="No. IC / No. syarikat pembeli" inputmode="text" spellcheck="false" />
+              </div>
+              <div class="field">
+                <label for="alamatPembeli">Alamat Pembeli</label>
+                <textarea id="alamatPembeli" placeholder="Masukkan alamat penuh pembeli" data-required="true" data-label="Alamat pembeli" autocomplete="street-address"></textarea>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">Maklumat Jualan</div>
+              <div class="field">
+                <label for="namaItem">Nama Item</label>
+                <input type="text" id="namaItem" placeholder="Contoh: Mesin rumput / motosikal / telefon" data-required="true" data-label="Nama item" />
+              </div>
+              <div class="field">
+                <label for="butiranItem">Butiran Item</label>
+                <textarea id="butiranItem" placeholder="Contoh: warna, model, keadaan item, kuantiti, nombor siri" data-required="true" data-label="Butiran item"></textarea>
+              </div>
+              <div class="grid-2">
+                <div class="field">
+                  <label for="hargaJualan">Harga Jualan (RM)</label>
+                  <input type="text" id="hargaJualan" placeholder="Contoh: 15000" data-required="true" data-label="Harga jualan" inputmode="decimal" autocomplete="off" spellcheck="false" />
+                  <div class="hint" id="hargaFormatted">Paparan: -</div>
+                  <div class="hint hint-strong" id="hargaWords">Dalam perkataan: -</div>
+                </div>
+                <div class="field">
+                  <label for="kaedahBayaran">Kaedah Bayaran</label>
+                  <input type="text" id="kaedahBayaran" placeholder="Contoh: Tunai / Bank Transfer" value="Tunai / Bank Transfer" data-required="true" data-label="Kaedah bayaran" />
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">Tandatangan</div>
+
+              <div class="field">
+                <div class="signature-box">
+                  <div class="signature-top">
+                    <strong>Tandatangan Penjual</strong>
+                    <button type="button" class="btn btn-secondary btn-small" id="clearPenjualBtn">Padam</button>
+                  </div>
+                  <canvas id="canvasPenjual"></canvas>
+                  <div class="hint">Guna mouse, touchpad, atau skrin sentuh untuk tandatangan.</div>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="signature-box">
+                  <div class="signature-top">
+                    <strong>Tandatangan Pembeli</strong>
+                    <button type="button" class="btn btn-secondary btn-small" id="clearPembeliBtn">Padam</button>
+                  </div>
+                  <canvas id="canvasPembeli"></canvas>
+                  <div class="hint">Tandatangan ini akan terus dipaparkan dalam surat di sebelah kanan.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="primary-action-row">
+              <button type="button" class="btn btn-primary" id="printBtn" data-action="print">Cetak / Simpan PDF</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-menu-toggle="true"
+                aria-expanded="false"
+                aria-controls="sideMenu"
+              >
+                Menu Ringkas
+              </button>
+            </div>
+            <p class="action-note">Tindakan lain seperti salin teks, isi contoh, dan reset ada dalam menu burger.</p>
+            <p class="action-feedback" id="actionFeedback">Draft akan disimpan secara automatik setiap kali anda mengubah maklumat.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="card" id="previewSection" aria-label="Preview surat">
+        <div class="preview-wrap">
+          <div class="paper">
+            <div class="paper-head">
+              <div class="tag">Dokumen Rasmi</div>
+              <h1>Surat Pengesahan Pembelian</h1>
+              <p>Dokumen persetujuan jual beli antara dua belah pihak</p>
+            </div>
+
+            <div class="meta">
+              <div><strong>No. Rujukan:</strong> <span id="outRujukan">-</span></div>
+              <div><strong>Tarikh:</strong> <span id="outTarikh">-</span></div>
+              <div><strong>Lokasi:</strong> <span id="outLokasi">-</span></div>
+            </div>
+
+            <div class="letter-body">
+              <p>
+                Saya / kami selaku <span class="hl">Penjual</span> bernama
+                <span class="hl" id="outNamaPenjual">________________</span>,
+                No. IC / No. Syarikat <span class="hl" id="outIcPenjual">________________</span>,
+                beralamat di <span class="hl keep-breaks" id="outAlamatPenjual">________________</span>,
+                dengan ini mengesahkan bahawa saya / kami telah menjual item kepada pihak
+                <span class="hl">Pembeli</span> bernama
+                <span class="hl" id="outNamaPembeli">________________</span>,
+                No. IC / No. Syarikat <span class="hl" id="outIcPembeli">________________</span>,
+                beralamat di <span class="hl keep-breaks" id="outAlamatPembeli">________________</span>.
+              </p>
+
+              <div class="detail-box">
+                <div class="detail-grid">
+                  <div class="detail-item">
+                    <small>Nama Item</small>
+                    <strong id="outNamaItem">________________</strong>
+                  </div>
+                  <div class="detail-item">
+                    <small>Harga Jualan</small>
+                    <strong id="outHargaJualan">________________</strong>
+                  </div>
+                  <div class="detail-item">
+                    <small>Kaedah Bayaran</small>
+                    <strong id="outKaedahBayaran">________________</strong>
+                  </div>
+                  <div class="detail-item">
+                    <small>Status Persetujuan</small>
+                    <strong id="outStatusPersetujuan">Menunggu maklumat lengkap</strong>
+                  </div>
+                  <div class="detail-item full-width">
+                    <small>Butiran Item</small>
+                    <strong class="keep-breaks" id="outButiranItem">________________</strong>
+                  </div>
+                  <div class="detail-item full-width">
+                    <small>Jumlah Dalam Perkataan</small>
+                    <strong class="detail-note" id="outHargaPerkataan">________________</strong>
+                  </div>
+                </div>
+              </div>
+
+              <p>
+                Dengan surat ini, kedua-dua pihak mengakui bahawa urusan jual beli ini dibuat secara sukarela,
+                tanpa paksaan, dan kedua-dua pihak bersetuju dengan harga, kaedah bayaran,
+                serta butiran item seperti yang dinyatakan di atas.
+              </p>
+
+              <p>
+                Surat ini boleh digunakan sebagai rujukan dan bukti pengesahan pembelian antara kedua-dua pihak pada tarikh tersebut.
+              </p>
+            </div>
+
+            <div class="signatures">
+              <div class="sig-card">
+                <div class="sig-label">Tandatangan Penjual</div>
+                <div class="sig-preview" id="sigOutPenjualWrap">
+                  <span class="empty-sign">Belum ditandatangani</span>
+                </div>
+                <div class="sig-line">
+                  <strong id="sigNamaPenjual">Nama Penjual</strong>
+                  <span>Penjual</span>
+                </div>
+              </div>
+
+              <div class="sig-card">
+                <div class="sig-label">Tandatangan Pembeli</div>
+                <div class="sig-preview" id="sigOutPembeliWrap">
+                  <span class="empty-sign">Belum ditandatangani</span>
+                </div>
+                <div class="sig-line">
+                  <strong id="sigNamaPembeli">Nama Pembeli</strong>
+                  <span>Pembeli</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
